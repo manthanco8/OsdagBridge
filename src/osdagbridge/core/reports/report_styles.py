@@ -23,4 +23,4 @@ def latex_table_layout():
         r"\BeforeBeginEnvironment{longtable}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}",
         r"\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}",
     ]
-    return "\\n".join(lines)
+    return "\n".join(lines)
