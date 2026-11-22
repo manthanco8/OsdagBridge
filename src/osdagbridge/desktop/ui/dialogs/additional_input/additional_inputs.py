@@ -61,8 +61,6 @@ class AdditionalInputs(QDialog):
  
         # Store all Compute functions to be called at Design
         self._compute_functions = []
-        # Track edits that have not yet been committed with Save.
-        self.is_modified = False
 
         # Unsaved-changes tracking: True once the user changes an input after the
         # last save/open. Programmatic updates run inside _suppress_modified().
@@ -83,12 +81,8 @@ class AdditionalInputs(QDialog):
             self.resize(1024, 900)
             
         self.setSizeGripEnabled(True)
-<<<<<<< HEAD
-        self.init_ui()
-=======
         with self._suppress_modified():
             self.init_ui()
->>>>>>> 1bc2612 (Add additional input validation and unsaved changes warning)
         self.is_modified = False
         self.setStyleSheet("""
             QDialog {
@@ -259,7 +253,6 @@ class AdditionalInputs(QDialog):
         self.set_defaults()
 
         self.default_input_dict.update(self.working_input_dict)
-        self.is_modified = False
 
         self._last_good_layout = {
             KEY_TS_GIRDER_SPACING: self.working_input_dict.get(KEY_TS_GIRDER_SPACING),
@@ -527,8 +520,6 @@ class AdditionalInputs(QDialog):
 
             self.working_input_dict[name] = value
 
-        self.is_modified = True
-
     def showEvent(self, event):  # Qt event: refreshes active sub-tabs when dialog is shown or reopened
         super().showEvent(event)
         from PySide6.QtWidgets import QTabWidget
@@ -542,45 +533,11 @@ class AdditionalInputs(QDialog):
 
     def _save_inputs(self):  # on_change: validates all tabs then commits working_input_dict and emits CAD update signal
 
-<<<<<<< HEAD
-        # Reject active Custom mode fields with empty values before saving.
-        def _iter_mode_line_fields(node):
-            if isinstance(node, dict):
-                if node.get("type") == TYPE_MODE_LINE and node.get("id"):
-                    yield node
-                for value in node.values():
-                    yield from _iter_mode_line_fields(value)
-            elif isinstance(node, list):
-                for value in node:
-                    yield from _iter_mode_line_fields(value)
-
-        for field_def in _iter_mode_line_fields(ADDITIONAL_INPUTS_SCHEMA):
-            field_id = field_def["id"]
-            choices = field_def.get("mode_choices", [])
-            custom_mode = next((choice for choice in choices if str(choice).lower() == "custom"), None)
-            if custom_mode is None:
-                continue
-            mode_widget = self.findChild(QComboBox, field_id + ".mode")
-            value_widget = self.findChild(QLineEdit, field_id + ".value")
-            if (mode_widget and mode_widget.currentText() == custom_mode
-                    and value_widget and not value_widget.text().strip()):
-                label = field_def.get("label", field_id)
-                label = re.sub(r"<[^>]*>", "", str(label)).strip() or field_id
-                CustomMessageBox(
-                    title="Validation Error",
-                    text=f"Error: The custom value for '{label}' cannot be empty.",
-                    buttons=["OK"],
-                    dialogType=MessageBoxType.Warning,
-                ).exec()
-                value_widget.setFocus()
-                return
-=======
         # Block the save if any "Custom" selection has an empty value field
         missing = self._find_missing_custom_values()
         if missing:
             self._show_empty_custom_errors(missing)
             return
->>>>>>> 1bc2612 (Add additional input validation and unsaved changes warning)
 
         # Flush the currently-displayed stiffener member's widgets before committing.
         # _save_stiffener_member_data otherwise only runs when switching *away* from a
@@ -591,7 +548,6 @@ class AdditionalInputs(QDialog):
             self._save_stiffener_member_data(combo.currentText().strip())
 
         self.default_input_dict.update(self.working_input_dict)
-        self.is_modified = False
         from osdagbridge.desktop.ui.docks.cad_cross_section import CrossSectionCADWidget
         cad = self.findChild(CrossSectionCADWidget, KEY_TS_CAD_PREVIEW)
         if cad:
@@ -771,41 +727,17 @@ class AdditionalInputs(QDialog):
     def _update_input_dict(self, key: str, value: str):  # utility: writes a value to working_input_dict, falling back to default if empty
         old_value = self.working_input_dict.get(key)
         if value is None or value == "":
-            new_value = self.default_input_dict.get(key)
+            self.working_input_dict[key] = self.default_input_dict.get(key)
         else:
             try:
-                new_value = int(value)
+                self.working_input_dict[key] = int(value)
             except (ValueError, TypeError):
                 try:
-                    new_value = float(value)
+                    self.working_input_dict[key] = float(value)
                 except (ValueError, TypeError):
-<<<<<<< HEAD
-                    new_value = value
-
-        if self.working_input_dict.get(key) != new_value:
-            self.is_modified = True
-        self.working_input_dict[key] = new_value
-
-    def closeEvent(self, event):
-        if not self.is_modified:
-            event.accept()
-            return
-
-        result = CustomMessageBox(
-            title="Unsaved Changes",
-            text="You have unsaved changes. Discard them and close?",
-            buttons=["Discard", "Cancel"],
-            dialogType=MessageBoxType.Warning,
-        ).exec()
-        if result == "Discard":
-            event.accept()
-        else:
-            event.ignore()
-=======
                     self.working_input_dict[key] = value
         if self.working_input_dict.get(key) != old_value:
             self._mark_modified()
->>>>>>> 1bc2612 (Add additional input validation and unsaved changes warning)
 
     # ── Tab Active State Utility ─────────────────────────────────────────────────
 
