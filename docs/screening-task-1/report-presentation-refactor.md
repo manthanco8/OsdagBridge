@@ -9,9 +9,9 @@ This increment is limited to report presentation configuration. It does not chan
 - Added `src/osdagbridge/core/reports/report_styles.py` to centralize page margin, table column padding, row stretch, longtable spacing, table rule thickness, extra row height, page-bottom guard threshold, and brand color.
 - Updated `report_generator.py` to consume centralized page-margin and table-layout settings in its LaTeX preamble.
 - Added `tests/unit/test_report_styles.py` to check centralized values, table layout strings, caption settings, and line spacing.
-- Added a repeated header for the Chapter 7 bill-of-materials longtable (`\endfirsthead` / `\endhead`) so the column labels appear if the table continues on another page. Presentation-only change; row values and quantity fields are untouched.
+- Added repeated column headers for all 7 Chapter 3 longtables (5 parameter tables and 2 additional sections as counted in source), and for the Chapter 7 bill-of-materials table using LaTeX `\endfirsthead` / `\endhead`. Presentation-only changes; row values and quantity fields are untouched.
 - Existing engineering calculation/report content is intentionally unchanged.
-- Remote source audit counted longtable environments by chapter: Chapter 2 has 9 (1 repeating-header block), Chapter 3 has 7 (none), Chapter 4 has 3 (1 repeating-header block), Chapter 5 has 30 (none), and Chapter 7 has 1 (none). This is a source-level count only; some tables may be short enough not to split. Header refactoring needs per-table review because table structures vary.
+- Remote source audit counted longtable environments by chapter: Chapter 2 has 9 (1 repeating-header block), Chapter 3 has 7 (now all with repeating headers), Chapter 4 has 3 (1 repeating-header block), Chapter 5 has 30 (none), and Chapter 7 has 1 (now with a repeating header). This is a source-level count only; some tables may be short enough not to split. Chapter 5 needs per-table review because table structures vary.
 
 ## Validation status
 
@@ -24,7 +24,7 @@ This increment is limited to report presentation configuration. It does not chan
 1. Run the new unit tests locally and report any failures.
 2. Generate a report using an existing approved sample without changing engineering inputs, then inspect page breaks, repeated table headers, and footer collisions.
 3. Capture before/after PDF evidence using the same approved sample.
-4. Review chapter-specific longtable headers table-by-table; avoid blanket edits to tables with complex header structures. Chapter 7's BOM table now repeats its header.
+4. Review Chapter 2 and Chapter 4 longtable headers table-by-table, and defer Chapter 5's complex 30 tables until a safe visual review.
 5. Complete the remaining presentation-only refactor after local validation.
 
 ## Submission checklist
