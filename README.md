@@ -59,8 +59,8 @@ These modules provide load models, combinations, material factors, and code chec
 ## Screening Task I: LaTeX Report Generator Refactoring (In Progress)
 
 Presentation-only refactoring started:
-- Centralized page margin and table layout settings in `src/osdagbridge/core/reports/report_styles.py`.
-- Updated the report preamble to consume centralized layout configuration.
+- Centralized page margin, table spacing/layout, caption style, and line spacing settings in `src/osdagbridge/core/reports/report_styles.py`.
+- Updated the report preamble to consume centralized layout and caption configuration.
 - Added unit tests for style configuration and generated LaTeX layout strings (not yet run locally).
 - Added a technical progress note at `docs/screening-task-1/report-presentation-refactor.md`.
 - Engineering calculations, input parameters, and design result interpretation are unchanged. Local PDF compilation, visual review, and before/after evidence remain pending.
