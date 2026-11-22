@@ -29,9 +29,9 @@ def test_latex_table_layout_uses_newline_separators():
     assert layout.count("\n") >= 8
 def test_latex_document_style_contains_caption_and_spacing_config():
     style = latex_document_style()
-    assert r"\\captionsetup{" in style
+    assert r"\captionsetup{" in style
     assert r"labelfont=bf" in style
     assert r"justification=raggedright" in style
     assert r"singlelinecheck=false" in style
     assert r"format=plain" in style
-    assert r"\\setstretch{1.15}" in style
+    assert r"\setstretch{1.15}" in style
