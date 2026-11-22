@@ -1,54 +1,56 @@
-# Winter Internship Screening — Contribution Summary (Applicant)
+# OsdagBridge Screening Work — Summary
 
-## Repository / branch
-- Fork: `manthanco8/OsdagBridge`
-- Working branch: `feature/screening-tasks`
-- Local working copy: `C:\\Users\\Manthan\\OsdagBridge` (do not include this personal path in public evidence)
+Fork: manthanco8/OsdagBridge  
+Branch: feature/screening-tasks
 
-## Task I — Report Generator Presentation Refactor
-**Progress: implementation and applicant-run unit tests recorded; PDF visual verification pending.**
-- Centralized report style settings and updated report generator to use them.
-- Added repeated headings to reviewed continuation tables.
-- Applicant-run results recorded: targeted style tests 4 passed; unit suite 25 passed.
-- Not verified: PDF compilation, generated PDF visual inspection, before/after evidence, complex Chapter 5 tables.
-- Report: `docs/screening-task-1/contribution-report.md`.
+This is a record of the software work I have done so far. It separates completed changes from items I have not verified or implemented.
 
-## Task II — UI, 2D CAD, Plotting Enhancements
-**Progress: Additional Inputs validation/unsaved-state implementation and reported tests documented.**
-- Custom-field validation with context and grouped missing-field messages.
-- Save blocked for missing required custom values.
-- Unsaved-state confirmation and state reset after save.
-- Recorded 18 tests passed; applicant GUI checks reported.
-- Screenshot directory `docs/screenshots/task-2/` needs existence/content verification before submission.
-- Contribution report: `docs/screening-task-2/contribution-report.md`.
-- No claim is made for unverified 2D CAD/plotting work.
+## Task I — Report generator (partial)
 
-## Task III — Parametric Substructure / IFC
-**Progress: safe file-workflow checklist only; implementation/engineering validation not done.**
-- Checklist covers file presence/readability/schema, open/close, path handling and evidence capture with approved fixtures.
-- No bridge geometry, structural dimensions, reinforcement, calculation, or design adequacy checks are claimed.
-- Checklist: `docs/screening-task-3/ifc-file-workflow-checklist.md`.
+- Added report_styles.py to centralize page and table presentation settings.
+- Connected the report generator to the shared style settings.
+- Added repeating headings to selected Chapter 2, Chapter 3, and Chapter 7 tables.
+- Added four tests for the shared style settings.
 
-## Task IV — Software Testing & Issue Reporting
-**Progress: two software checks confirmed; remaining checks not run.**
-- UI-01 Startup: PASS (app opened, user confirmed).
-- UI-02 Picker cancellation: PASS (cancel returned to app normally, user confirmed).
-- UI-03 Invalid path: NOT RUN.
-- UI-04 Unsaved-state warning: NOT RUN (window closed with no edits; no warning was expected).
-- UI-05 Input validation UI: NOT RUN.
-- UI-06 Report destination: NOT RUN.
-- OBS-01 Qt runtime message: observed excerpt documented; trigger and reproducibility unknown, root cause not established.
-- Evidence log: `docs/screening-task-4/software-test-evidence-log.md`.
-- Observation report: `docs/screening-task-4/observed-qt-runtime-message.md`.
+**Recorded tests:** 4 style tests passed; a later full unit run reported 25 passed. These are earlier recorded runs; I have not rerun tests on the current branch head.
 
-## Final verification checklist (complete before submission)
-- [ ] Pull latest branch locally and confirm `git status` clean.
-- [ ] Re-run relevant applicant-safe unit tests for Tasks I and II; save exact output.
-- [ ] Confirm Task II screenshot files exist, open correctly, and are committed; remove any personal/sensitive paths from screenshots.
-- [ ] Confirm contribution reports and this summary are present on branch.
-- [ ] Do not claim PDF visual verification unless an approved sample/report is generated and reviewed.
-- [ ] Do not mark Task IV tests PASS unless actually performed; retain NOT RUN for untested items.
-- [ ] Review branch commit history and prepare a concise submission message with fork/branch and documented work.
+**Still outstanding:** Compile the report and inspect it visually; provide before/after PDFs; finish the requested live-load/footway table refactor and charts. Chapter 2 source was reviewed and three invalid longtable-header blocks were removed from regular tabular tables. The remaining Chapter 2 header coverage still needs a source and PDF review.
 
-## Limitations
-This summary reflects recorded changes and user-confirmed test observations. It does not claim maintainer acceptance, complete screening-task coverage, or engineering validation.
+Report files: docs/screening-task-1/.
+
+## Task II — UI enhancements (partial)
+
+I implemented the Additional Inputs validation and unsaved-change portion:
+- Blank applicable Custom values block Save.
+- Missing fields are named, and multiple errors are shown together.
+- Changed inputs are tracked.
+- Closing with unsaved changes prompts Discard or Cancel.
+- Cancel leaves the dialog open; Discard closes it; Save resets the modified flag.
+
+The two Task II test files contain 18 tests. A recorded run reported 23 tests passing on commit 15e8bce; a later full unit run reported 25 passed. These are recorded results, not a fresh test run on the current head.
+
+Five Task II screenshots are stored in docs/images/. I did not implement the interactive 2D CAD editing or transverse-member plotting subtasks.
+
+Report and notes: docs/screening-task-2/ and docs/task2_additional_inputs_validation.md.
+
+## Task III — IFC workflow checklist only
+
+I added a checklist for file-level IFC workflow checks. I did not implement substructure geometry or IFC integration. The checklist is in docs/screening-task-3/ifc-file-workflow-checklist.md.
+
+## Task IV — Software testing (partial)
+
+- Startup: PASS; screenshot is docs/screenshots/task-4/01-app-startup.png.
+- File-picker cancellation: PASS (confirmed during the UI check).
+- Invalid path, unsaved-state, input-validation UI, and report-destination checks: NOT RUN.
+- A Qt window-handle message was observed, but its trigger is unknown and it has not been reproduced.
+
+Evidence and notes: docs/screening-task-4/.
+
+## Final checks before submission
+
+- Pull the latest branch and confirm git status is clean.
+- Run the tests again if the environment allows; save the exact output.
+- Open and inspect the Task II screenshots. They are committed in docs/images/.
+- Keep unverified checks marked NOT RUN.
+- Include the report, relevant source/test files, screenshots, and notes in the supporting ZIP.
+- Do not claim that the report PDF was compiled or visually checked.
