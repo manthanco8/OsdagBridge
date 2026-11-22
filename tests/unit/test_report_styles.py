@@ -5,6 +5,7 @@ from osdagbridge.core.reports.report_styles import (
     REPORT_TABLE_ROW_STRETCH,
     REPORT_BRAND_GREEN_HEX,
     latex_table_layout,
+    latex_document_style,
 )
 
 def test_report_style_settings_are_centralized():
@@ -26,3 +27,11 @@ def test_latex_table_layout_uses_newline_separators():
     layout = latex_table_layout()
     assert "\\n" not in layout
     assert layout.count("\n") >= 8
+def test_latex_document_style_contains_caption_and_spacing_config():
+    style = latex_document_style()
+    assert r"\\captionsetup{" in style
+    assert r"labelfont=bf" in style
+    assert r"justification=raggedright" in style
+    assert r"singlelinecheck=false" in style
+    assert r"format=plain" in style
+    assert r"\\setstretch{1.15}" in style
