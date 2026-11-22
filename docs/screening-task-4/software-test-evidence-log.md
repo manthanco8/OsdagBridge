@@ -18,7 +18,7 @@ Use this log for checks that have actually been performed. Leave the status as N
 | UI-03 | Invalid file path handling | App open | Use approved invalid-path scenario | Clear error; no crash | | NOT RUN | | |
 | UI-04 | Unsaved-state dialog | Safe UI test context | Closed Additional Inputs without editing anything | Warning not shown (no changes made; expected) | NOT RUN | User-confirmed no warning appeared | Test requires safe approved UI fixture with actual unsaved change; not attempted |
 | UI-05 | Input validation UI | Approved software test fixture | Submit intentionally incomplete UI fixture only | Validation message is clear; no silent save | | NOT RUN | | |
-| UI-06 | Report destination handling | Approved fixture, no design execution | Check path selection/validation only | Clear path handling; no unintended overwrite | | NOT RUN | | |
+| UI-06 | Report destination handling | Approved fixture, no design execution | Check path selection/validation only | Clear path handling; no unintended overwrite | | NOT RUN | | |\n| OBS-01 | Qt runtime message observation | App had been opened during UI checks | User shared terminal excerpt; trigger not captured | No unexpected window-handle/event-dispatch error | Qt message and stack excerpt observed; cause/repro unknown | OBSERVED (not a test) | `observed-qt-runtime-message.md` | Full log and triggering action unavailable; do not treat as reproduced
 
 ## Evidence naming
 Use `task-4/<test-id>-<short-description>.png` for screenshots and `task-4/logs/<test-id>.txt` for logs. Do not include sensitive personal paths or project data in shared evidence.
