@@ -1,0 +1,25 @@
+"""Centralized visual settings for OsdagBridge report presentation."""
+REPORT_PAGE_MARGIN = "1in"
+REPORT_TABLE_COLUMN_PADDING_PT = "6"
+REPORT_TABLE_ROW_STRETCH = "1.12"
+REPORT_LONGTABLE_PRE_SKIP = "0pt"
+REPORT_LONGTABLE_POST_SKIP = "6pt"
+REPORT_TABLE_RULE_WIDTH_PT = "0.5pt"
+REPORT_EXTRA_ROW_HEIGHT = "0.6pt"
+REPORT_TABLE_PAGE_GUARD_BASELINES = "5"
+REPORT_BRAND_GREEN_HEX = "91B014"
+REPORT_BODY_LINE_STRETCH = "1.15"
+
+def latex_table_layout():
+    """Return shared LaTeX table spacing and page guard settings."""
+    return (
+        r"\\setlength{\\tabcolsep}{" + REPORT_TABLE_COLUMN_PADDING_PT + r"}pt" + "\\n"
+        + r"\\renewcommand{\\arraystretch}{" + REPORT_TABLE_ROW_STRETCH + r"}" + "\\n"
+        + r"\\setlength{\\LTpre}{" + REPORT_LONGTABLE_PRE_SKIP + r"}" + "\\n"
+        + r"\\setlength{\\LTpost}{" + REPORT_LONGTABLE_POST_SKIP + r"}" + "\\n"
+        + r"\\setlength{\\arrayrulewidth}{" + REPORT_TABLE_RULE_WIDTH_PT + r"}" + "\\n"
+        + r"\\setlength{\\extrarowheight}{" + REPORT_EXTRA_ROW_HEIGHT + r"}" + "\\n"
+        + r"\\BeforeBeginEnvironment{table}{\\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\\baselineskip}" + "\\n"
+        + r"\\BeforeBeginEnvironment{longtable}{\\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\\baselineskip}" + "\\n"
+        + r"\\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}" + "\\n"
+    )
