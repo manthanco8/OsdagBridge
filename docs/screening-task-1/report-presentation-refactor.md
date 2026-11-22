@@ -8,7 +8,7 @@ This increment is limited to report presentation configuration. It does not chan
 
 - Added `src/osdagbridge/core/reports/report_styles.py` to centralize page margin, table column padding, row stretch, longtable spacing, table rule thickness, extra row height, page-bottom guard threshold, and brand color.
 - Updated `report_generator.py` to consume centralized page-margin and table-layout settings in its LaTeX preamble.
-- Added `tests/unit/test_report_styles.py` to check centralized values and generated LaTeX layout string formatting.
+- Added `tests/unit/test_report_styles.py` to check centralized values, table layout strings, caption settings, and line spacing.
 - Existing chapter code and engineering calculation/report content are intentionally unchanged.
 - Remote source audit counted longtable environments by chapter: Chapter 2 has 9 (1 repeating-header block), Chapter 3 has 7 (none), Chapter 4 has 3 (1 repeating-header block), Chapter 5 has 30 (none), and Chapter 7 has 1 (none). This is a source-level count only; some tables may be short enough not to split. Header refactoring needs per-table review because table structures vary.
 
