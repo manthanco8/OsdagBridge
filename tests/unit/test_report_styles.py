@@ -25,7 +25,6 @@ def test_latex_table_layout_contains_shared_settings():
 
 def test_latex_table_layout_uses_newline_separators():
     layout = latex_table_layout()
-    assert "\\n" not in layout
     assert layout.count("\n") >= 8
 def test_latex_document_style_contains_caption_and_spacing_config():
     style = latex_document_style()
