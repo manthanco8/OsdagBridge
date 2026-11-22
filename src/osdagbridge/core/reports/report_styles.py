@@ -8,7 +8,6 @@ REPORT_TABLE_RULE_WIDTH_PT = "0.5pt"
 REPORT_EXTRA_ROW_HEIGHT = "0.6pt"
 REPORT_TABLE_PAGE_GUARD_BASELINES = "5"
 REPORT_BRAND_GREEN_HEX = "91B014"
-REPORT_BODY_LINE_STRETCH = "1.15"
 
 def latex_table_layout():
     """Return shared LaTeX table spacing and page guard settings."""
