@@ -13,10 +13,10 @@ Use this log for checks that have actually been performed. Leave the status as N
 ## Test record template
 | ID | Software check | Preconditions | Steps performed | Expected behavior | Actual behavior | Status (PASS/FAIL/NOT RUN) | Evidence/log reference | Notes |
 |---|---|---|---|---|---|---|---|
-| UI-01 | Application startup | Environment configured | Launch desktop app | App opens or provides clear error | | NOT RUN | | |
-| UI-02 | Cancel file picker | App open | Open picker; cancel | Dialog closes without unintended state change | | NOT RUN | | |
+| UI-01 | Application startup | Environment configured | Launched desktop app locally | App opens or provides clear error | App opened successfully | PASS | User-confirmed app launch |
+| UI-02 | Cancel file picker | App open | Clicked Select Location; opened picker; cancelled without selecting | Dialog closes without unintended state change | App returned normally; no crash/freeze reported | PASS | User-confirmed picker cancellation |
 | UI-03 | Invalid file path handling | App open | Use approved invalid-path scenario | Clear error; no crash | | NOT RUN | | |
-| UI-04 | Unsaved-state dialog | Safe UI test context | Trigger documented unsaved-state flow | Choices are clear; cancel preserves state | | NOT RUN | | |
+| UI-04 | Unsaved-state dialog | Safe UI test context | Closed Additional Inputs without editing anything | Warning not shown (no changes made; expected) | NOT RUN | User-confirmed no warning appeared | Test requires safe approved UI fixture with actual unsaved change; not attempted |
 | UI-05 | Input validation UI | Approved software test fixture | Submit intentionally incomplete UI fixture only | Validation message is clear; no silent save | | NOT RUN | | |
 | UI-06 | Report destination handling | Approved fixture, no design execution | Check path selection/validation only | Clear path handling; no unintended overwrite | | NOT RUN | | |
 
