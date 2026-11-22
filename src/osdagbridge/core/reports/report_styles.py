@@ -31,12 +31,12 @@ REPORT_DOCUMENT_LINE_SPACING = "1.15"
 
 def latex_document_style():
     """Return shared caption and body line-spacing configuration."""
-    return "\\n".join([
-        r"\\captionsetup{",
+    return chr(10).join([
+        r"\captionsetup{",
         r"    labelfont=" + REPORT_CAPTION_LABEL_STYLE + r",",
         r"    justification=" + REPORT_CAPTION_ALIGNMENT + r",",
         r"    singlelinecheck=" + REPORT_CAPTION_SINGLELINE_CHECK + r",",
         r"    format=" + REPORT_CAPTION_FORMAT,
         r"}",
-        r"\\setstretch{" + REPORT_DOCUMENT_LINE_SPACING + r"}",
+        r"\setstretch{" + REPORT_DOCUMENT_LINE_SPACING + r"}",
     ])
