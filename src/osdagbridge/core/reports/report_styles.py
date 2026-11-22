@@ -19,8 +19,8 @@ def latex_table_layout():
         r"\setlength{\LTpost}{" + REPORT_LONGTABLE_POST_SKIP + r"}",
         r"\setlength{\arrayrulewidth}{" + REPORT_TABLE_RULE_WIDTH_PT + r"}",
         r"\setlength{\extrarowheight}{" + REPORT_EXTRA_ROW_HEIGHT + r"}",
-        r"\BeforeBeginEnvironment{table}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}",
-        r"\BeforeBeginEnvironment{longtable}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}",
+        r"\BeforeBeginEnvironment{table}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}}",
+        r"\BeforeBeginEnvironment{longtable}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}}",
         r"\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}",
     ]
     return "\n".join(lines)
