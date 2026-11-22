@@ -12,7 +12,7 @@ os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 
 from PySide6.QtWidgets import QApplication, QComboBox, QLineEdit  # noqa: E402
 
-import osdagbridge.desktop.ui.dialogs.additional_input.additional_inputs as ai_module  # noqa: E402
+agbridge.desktop.ui.dialogs.additional_input.additional_inputs as ai_module  # noqa: E402
 from osdagbridge.core.bridge_types.plate_girder.defaults import (  # noqa: E402
     BASIC_INPUT_DICT, solve_extend_basic_input_dict,
 )
