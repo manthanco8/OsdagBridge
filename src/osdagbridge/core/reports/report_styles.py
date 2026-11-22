@@ -12,14 +12,15 @@ REPORT_BODY_LINE_STRETCH = "1.15"
 
 def latex_table_layout():
     """Return shared LaTeX table spacing and page guard settings."""
-    return (
-        r"\\setlength{\\tabcolsep}{" + REPORT_TABLE_COLUMN_PADDING_PT + r"}pt" + "\\n"
-        + r"\\renewcommand{\\arraystretch}{" + REPORT_TABLE_ROW_STRETCH + r"}" + "\\n"
-        + r"\\setlength{\\LTpre}{" + REPORT_LONGTABLE_PRE_SKIP + r"}" + "\\n"
-        + r"\\setlength{\\LTpost}{" + REPORT_LONGTABLE_POST_SKIP + r"}" + "\\n"
-        + r"\\setlength{\\arrayrulewidth}{" + REPORT_TABLE_RULE_WIDTH_PT + r"}" + "\\n"
-        + r"\\setlength{\\extrarowheight}{" + REPORT_EXTRA_ROW_HEIGHT + r"}" + "\\n"
-        + r"\\BeforeBeginEnvironment{table}{\\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\\baselineskip}" + "\\n"
-        + r"\\BeforeBeginEnvironment{longtable}{\\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\\baselineskip}" + "\\n"
-        + r"\\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}" + "\\n"
-    )
+    lines = [
+        r"\setlength{\tabcolsep}{" + REPORT_TABLE_COLUMN_PADDING_PT + r"}pt",
+        r"\renewcommand{\arraystretch}{" + REPORT_TABLE_ROW_STRETCH + r"}",
+        r"\setlength{\LTpre}{" + REPORT_LONGTABLE_PRE_SKIP + r"}",
+        r"\setlength{\LTpost}{" + REPORT_LONGTABLE_POST_SKIP + r"}",
+        r"\setlength{\arrayrulewidth}{" + REPORT_TABLE_RULE_WIDTH_PT + r"}",
+        r"\setlength{\extrarowheight}{" + REPORT_EXTRA_ROW_HEIGHT + r"}",
+        r"\BeforeBeginEnvironment{table}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}",
+        r"\BeforeBeginEnvironment{longtable}{\needspace{" + REPORT_TABLE_PAGE_GUARD_BASELINES + r"\baselineskip}",
+        r"\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}",
+    ]
+    return "\\n".join(lines)
