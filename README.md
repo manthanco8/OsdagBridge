@@ -5,7 +5,6 @@ It supports desktop (PySide6), web (Django + React), and CLI interfaces through 
 
 The system currently supports:
 - Plate Girder Bridges  
- 
 
 Additional bridge types can be added through the plugin architecture.
 
@@ -28,31 +27,52 @@ Each bridge type includes:
 
 ### Reusable Bridge Components
 Common structural elements are defined in `bridge_components/`:
-- Girders  
-- Decks  
-- Crash barriers  
-- Pedestals  
-- Piers  
-- Foundations  
-- Piles and pile caps  
+- Girders
+- Decks
+- Crash barriers
+- Pedestals
+- Piers
+- Foundations
+- Piles and pile caps
 
 Components are shared across multiple bridge types.
 
 ### Multi-Solver Analysis Support
 Multiple analysis backends are supported:
-- Native lightweight FEM solver  
-- OpenSeesPy  
-- OspGrillage  
+- Native lightweight FEM solver
+- OpenSeesPy
+- OspGrillage
 
 Solvers are switchable at runtime via adapters.
 
 ### Integrated Indian Standards
 Included under `core/utils/codes/`:
-- IRC:6–2017  
-- IRC:22–2015  
-- IRC:24–2010  
+- IRC:6–2017
+- IRC:22–2015
+- IRC:24–2010
 
 These modules provide load models, combinations, material factors, and code checks.
+
+---
+
+## Screening Task II: UI, 2D CAD, and Plotting Enhancements
+
+This branch includes improvements to the Additional Inputs dialog in the desktop application:
+
+- Validates required fields when Custom mode is selected.
+- Displays missing field names together with their tab and input path context.
+- Reports multiple missing Custom fields in one validation message.
+- Prevents saving when required Custom inputs are missing.
+- Tracks modified/unsaved input state.
+- Prompts the user to confirm before closing with unsaved changes.
+- Supports Cancel and Discard actions in the close confirmation.
+- Clears the modified state after a successful save.
+
+### Validation and Testing
+
+- Automated unit tests cover the additional-input validation helper and dialog behavior.
+- Recorded test run: **18 tests passed**.
+- Manual GUI checks confirmed missing-field messages, multiple-field validation, and the Custom-field validation flow.
 
 ---
 
@@ -66,11 +86,11 @@ OsdagBridge/
 └── src/
     └── osdagbridge/
         ├── core/              # Analysis, design, IO, solvers, codes
-        ├── bridge_types/      # Plate girder, box girder, truss
+        ├── bridge_types/      # Bridge-type modules
         ├── bridge_components/ # Reusable components
         ├── cli/               # Command-line interface
-        ├── desktop/           # PySide6 GUI
-        └── web/               # Django + React web stack
+        ├── desktop/            # PySide6 GUI
+        └── web/                # Django + React web stack
 ```
 
 ---
@@ -156,9 +176,9 @@ Continuous integration runs automatically through GitHub Actions (`.github/workf
 - Web backend/frontend: `src/osdagbridge/web/`
 
 ### Contribution Workflow
-1. Fork the repository  
-2. Create a feature branch  
-3. Ensure all tests pass (`pytest`)  
+1. Fork the repository
+2. Create a feature branch
+3. Ensure tests pass (`pytest`)
 4. Submit a pull request
 
 ---
