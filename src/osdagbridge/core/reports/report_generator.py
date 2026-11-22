@@ -119,7 +119,7 @@ from osdagbridge.core.utils.common import (
 )
 
 from osdagbridge.core.reports.report_utils import _tex
-from osdagbridge.core.reports.report_styles import REPORT_PAGE_MARGIN, latex_table_layout
+from osdagbridge.core.reports.report_styles import REPORT_PAGE_MARGIN, latex_table_layout, latex_document_style
 from .executive_summary import executive_summary
 from .chap1 import ch1_project_info
 from .chap2 import ch2_input_parameters
@@ -172,12 +172,7 @@ def preamble(project_name, job_number, report_date, report_version='Rev 0'):
 \usepackage{enumitem}
 \usepackage{caption}
 
-\captionsetup{
-    labelfont=bf,
-    justification=raggedright,
-    singlelinecheck=false,
-    format=plain
-}
+""" + latex_document_style() + r"""
 \usepackage{subcaption}
 \usepackage{multirow}
 \usepackage{colortbl}
