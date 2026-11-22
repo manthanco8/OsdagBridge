@@ -63,7 +63,7 @@ Presentation-only refactoring started:
 - Updated the report preamble to consume centralized layout and caption configuration.
 - Added unit tests for style configuration and generated LaTeX layout strings (not yet run locally).
 - Added a technical progress note at `docs/screening-task-1/report-presentation-refactor.md`.
-- Added repeating headers to all 7 Chapter 3 longtables and the Chapter 7 bill-of-materials table for continuation pages (presentation-only).
+- Added repeating headers to 7 Chapter 2 tables, all 7 Chapter 3 longtables, and the Chapter 7 bill-of-materials table for continuation pages (presentation-only).
 - Local verification: `pytest tests/unit/test_report_styles.py -q` → 4 passed; `pytest tests/unit -q` → 25 passed (26.50s), reported by the applicant.
 - Engineering calculations, input parameters, and design result interpretation are unchanged. PDF compilation, visual review, and before/after evidence remain pending.
 
