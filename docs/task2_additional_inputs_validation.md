@@ -1,115 +1,32 @@
-# Additional Inputs Dialog: Custom-value Validation and Unsaved-changes Warning
+# Additional Inputs Dialog — Validation and Unsaved Changes
 
-Scope: FOSSEE Winter Internship 2026 screening, Task II (UI validation and state management).
-Branch: `feature/screening-tasks` (fork: `manthanco8/OsdagBridge`).
-This change only touches dialog behaviour. No structural design calculation, default value or
-analysis code was modified.
+This note describes the part of Task II I implemented: checking required Custom values before saving and warning when the dialog is closed with unsaved edits.
 
-## 1. Objective
+## Save validation
 
-1. Do not let the user save the Additional Inputs dialog while a parameter is set to **Custom**
-   but its value field is empty.
-2. Do not let the user lose edits by accident: warn when the dialog is closed with unsaved changes.
-3. Use the central keys from `core/utils/common.py` instead of hard-coded parameter strings.
+When Save is clicked, the dialog checks the applicable Custom selectors. If a Custom value is empty, saving is stopped and the error message lists the field name and its tab/input context. Multiple missing values are shown together.
 
-## 2. Behaviour
+Hidden, disabled, or inactive fields are skipped. The check uses central keys from common.py and discovers mode/value pairs from the input schema. A small dependency map handles Custom selectors that unlock separate value fields.
 
-### 2.1 Save validation
-- Clicking **Save** first checks every applicable "Custom" input.
-- If any is empty, the save is cancelled and one error dialog (the existing `CustomMessageBox`,
-  type Critical) lists **every** empty parameter, one per entry:
+## Unsaved changes
 
-  `Error: The custom value for '<Parameter Name>' cannot be empty.`
+The dialog sets is_modified when a value actually changes. If the user closes the dialog with unsaved edits, it asks whether to Discard or Cancel. Cancel keeps the dialog open with the edits; Discard closes it without saving. Saving clears the modified flag.
 
-  Below each entry the tab path is shown, for example `(Loading > Wind Load)`.
-- Hidden or disabled value fields, and fields inside a disabled tab, are not checked
-  (for example Density/Area are hidden for a Custom crash barrier).
-- When all applicable Custom inputs are filled, Save works exactly as before.
+## Files changed
 
-### 2.2 Unsaved-changes warning
-- `self.is_modified` becomes `True` when the user changes an input to a **different** value.
-- On close (title-bar X, `close()`, or the Esc key) with `is_modified == True`, this warning is shown
-  with the buttons **Discard** and **Cancel**:
+- additional_input_validation.py: Qt-free validation helper.
+- additional_inputs.py: dialog validation, modified-state tracking, and close handling.
+- test_additional_input_validation.py: helper tests.
+- test_additional_inputs_dialog.py: dialog tests.
 
-  `You have unsaved changes. Closing this window will discard them. Do you want to proceed?`
+## Tests recorded
 
-- **Discard**: the dialog closes; on the next open it reloads from the saved input dictionary,
-  so the discarded edits are gone.
-- **Cancel** (or closing the warning itself): the dialog stays open with all entered values.
-- No warning when nothing changed, or right after a successful Save (Save resets the flag).
-- Opening the dialog, loading defaults and building the UI never set the flag
-  (`_suppress_modified()` guard plus a reset when the dialog is shown).
+The two Task II test files contain 18 tests. A recorded run at commit 15e8bce reported python -m pytest tests -q → 23 passed. A later run of the full unit suite reported 25 passed. These results are historical; I have not rerun them on the current branch head.
 
-## 3. Files changed
+## Screenshots
 
-| File | Purpose |
-|---|---|
-| `src/osdagbridge/core/bridge_types/plate_girder/additional_input_validation.py` (new) | Qt-free helper: discovers Custom selector/value pairs, finds the empty ones, formats the error. |
-| `src/osdagbridge/desktop/ui/dialogs/additional_input/additional_inputs.py` | Hooks the helper into `_save_inputs`; adds `is_modified`, `closeEvent`, `reject`, change tracking. |
-| `tests/unit/test_additional_input_validation.py` (new) | 9 unit tests for the helper (no GUI). |
-| `tests/unit/test_additional_inputs_dialog.py` (new) | 9 offscreen GUI tests on the real dialog. |
+The five screenshots are stored in docs/images/ and referenced by the contribution report. I checked the repository listing for the files, but the final visual review is still pending.
 
-## 4. How it works
+## Limitations
 
-**Where Custom pairs come from (no hard-coded names).**
-1. `TYPE_MODE_LINE` fields in `ADDITIONAL_INPUTS_SCHEMA` whose `mode_choices` contain "Custom" are
-   discovered by walking the schema. The UI builder names their widgets `<field_id>.mode` and
-   `<field_id>.value`, so the dialog looks them up by those central keys. A new mode/value field is
-   validated automatically.
-2. Some Custom selectors are plain combo boxes that unlock separate line edits (crash barrier,
-   median, railing, wearing course). The schema does not link them, so
-   `CUSTOM_VALUE_DEPENDENCIES` maps the combo key to the dependent keys, using the existing
-   `KEY_CB_*`, `KEY_MD_*`, `KEY_RL_*` and `KEY_WC_*` constants.
-
-**Keys.** The task text mentions `KEY_ADD_...`; in this repository the central keys use other
-prefixes (`KEY_WL_*`, `KEY_CB_*`, ...). Existing constants were reused. No new key was added.
-
-**Labels.** Schema labels contain HTML (`C<sub>D</sub>`); tags and a trailing colon are removed
-for the message.
-
-**Change tracking.** `_update_input_dict` marks the dialog modified only if the stored value really
-changed. The segment table and member-bound dialogs, which write to the dictionary directly, do the
-same check.
-
-**Closing.** `closeEvent` and `reject` (used by Esc, which does not call `closeEvent`) share one
-helper, `_confirm_discard_changes`. Anything other than the **Discard** button counts as Cancel.
-
-## 5. Testing
-
-Automated (run on the pushed commit `15e8bce`, from a fresh clone and on the developer machine):
-
-```
-python -m pytest tests -q
-23 passed
-```
-
-18 of the 23 are new. They cover: helper discovery from the schema, empty and whitespace-only
-Custom values, hidden fields being skipped, several errors at once, exact message format, save
-blocked, save allowed, flag reset after save, Cancel, Discard, Esc, no warning when unmodified,
-reopen after Discard. The GUI tests build the real `AdditionalInputs` dialog offscreen and replace
-only the popup class with a recorder.
-
-Manual GUI checks (app run with `python -m osdagbridge.desktop`):
-
-| Check | Result |
-|---|---|
-| Custom + empty value, Save | Error popup names the parameter and tab path; nothing saved |
-| Several empty Custom inputs | All listed together |
-| Fill the value, Save again | The matching error disappears; save succeeds |
-| Change a value, click X | Warning with Discard / Cancel and the exact text |
-| Cancel | Dialog stays open, edited value kept |
-| Discard, reopen | Dialog closes; edited value is back to the saved one |
-| Save, then X without changes | Dialog closes with no warning |
-
-Screenshots are in `docs/images/` (see the report).
-
-## 6. Limitations
-
-- The Esc key was verified by an automated test only, not by hand.
-- Combo boxes that unlock separate line edits must be listed in `CUSTOM_VALUE_DEPENDENCIES`;
-  a new field of that kind needs one line there.
-- `is_modified` is driven by the central change handler plus the segment table and member-bound
-  dialogs. Other special tables or dialogs inside the Additional Inputs window were not
-  individually tested for change tracking.
-- Adaptive "Custom" design-mode blocks are not part of this validation.
-- Only the Additional Inputs dialog is covered; 2D CAD editing and plotting are separate tasks.
+This contribution covers the Additional Inputs dialog only. The interactive 2D CAD parameter editing and transverse-member plotting tasks are not implemented. Some special tables/dialogs may not be covered by change tracking, and the Esc path was covered by a test rather than a manual check.
