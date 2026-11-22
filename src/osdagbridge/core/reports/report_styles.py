@@ -23,3 +23,20 @@ def latex_table_layout():
         r"\definecolor{osdagGreen}{HTML}{" + REPORT_BRAND_GREEN_HEX + r"}",
     ]
     return "\n".join(lines)
+REPORT_CAPTION_LABEL_STYLE = "bf"
+REPORT_CAPTION_ALIGNMENT = "raggedright"
+REPORT_CAPTION_SINGLELINE_CHECK = "false"
+REPORT_CAPTION_FORMAT = "plain"
+REPORT_DOCUMENT_LINE_SPACING = "1.15"
+
+def latex_document_style():
+    """Return shared caption and body line-spacing configuration."""
+    return "\\n".join([
+        r"\\captionsetup{",
+        r"    labelfont=" + REPORT_CAPTION_LABEL_STYLE + r",",
+        r"    justification=" + REPORT_CAPTION_ALIGNMENT + r",",
+        r"    singlelinecheck=" + REPORT_CAPTION_SINGLELINE_CHECK + r",",
+        r"    format=" + REPORT_CAPTION_FORMAT,
+        r"}",
+        r"\\setstretch{" + REPORT_DOCUMENT_LINE_SPACING + r"}",
+    ])
